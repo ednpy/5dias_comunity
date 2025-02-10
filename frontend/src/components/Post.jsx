@@ -7,6 +7,15 @@ import { Loader, MessageCircle, Send, Share2, ThumbsUp, Trash2 } from "lucide-re
 import { formatDistanceToNow } from "date-fns";
 
 import PostAction from "./PostAction";
+import ShareModal from "./ShareModal";
+
+const formatText = (text) => {
+    return text
+        .replace(/\*(.*?)\*/g, '<b>$1</b>') // Negrita
+        .replace(/_(.*?)_/g, '<i>$1</i>') // Cursiva
+        .replace(/~(.*?)~/g, '<s>$1</s>') // Tachado
+        .replace(/```(.*?)```/g, '<code>$1</code>'); // Monoespaciado
+};
 
 const Post = ({ post }) => {
 	const { postId } = useParams();
@@ -19,6 +28,8 @@ const Post = ({ post }) => {
 	const isLiked = post.likes.includes(authUser._id);
 
 	const queryClient = useQueryClient();
+	const [showFullContent, setShowFullContent] = useState(false);
+    const [showShareModal, setShowShareModal] = useState(false); 
 
 	const { mutate: deletePost, isPending: isDeletingPost } = useMutation({
 		mutationFn: async () => {
@@ -86,6 +97,14 @@ const Post = ({ post }) => {
 		}
 	};
 
+	const toggleContent = () => {
+        setShowFullContent(!showFullContent);
+    };
+
+	const handleShare = () => {
+        setShowShareModal(true);
+    };
+	
 	return (
 		<div className='bg-white rounded-lg shadow mb-4'>
 			<div className='p-4'>
@@ -115,7 +134,14 @@ const Post = ({ post }) => {
 						</button>
 					)}
 				</div>
-				<p className='mb-4'>{post.content}</p>
+				<p className='mb-4' style={{ whiteSpace: 'pre-wrap' }}>
+					<span dangerouslySetInnerHTML={{ __html: formatText(showFullContent ? post.content : `${post.content.substring(0, 280)}${post.content.length > 280 ? '...' : ''}`) }}></span>
+					{post.content.length > 280 && (
+						<button onClick={toggleContent} className='text-blue-500 hover:underline ml-2'>
+							{showFullContent ? "Ver menos" : "Ver más"}
+						</button>
+					)}
+				</p>
 				{post.image && <img src={post.image} alt='Post content' className='rounded-lg w-full mb-4' />}
 
 				<div className='flex justify-between text-info'>
@@ -130,7 +156,7 @@ const Post = ({ post }) => {
 						text={`Comment (${comments.length})`}
 						onClick={() => setShowComments(!showComments)}
 					/>
-					<PostAction icon={<Share2 size={18} />} text='Share' />
+					<PostAction icon={<Share2 size={18} />} text='Share' onClick={handleShare}/>
 				</div>
 			</div>
 
@@ -176,6 +202,12 @@ const Post = ({ post }) => {
 					</form>
 				</div>
 			)}
+			 {showShareModal && (
+                <ShareModal
+                    url={`${window.location.origin}/post/${post._id}`}
+                    onClose={() => setShowShareModal(false)}
+                />
+            )}
 		</div>
 	);
 };
