@@ -7,6 +7,7 @@ import AboutSection from "../components/AboutSection";
 import ExperienceSection from "../components/ExperienceSection";
 import EducationSection from "../components/EducationSection";
 import SkillsSection from "../components/SkillsSection";
+import UserPostsSection from "../components/UserPostsSection";
 import toast from "react-hot-toast";
 
 const ProfilePage = () => {
@@ -42,12 +43,17 @@ const ProfilePage = () => {
 	};
 
 	return (
-		<div className='max-w-4xl mx-auto p-4'>
-			<ProfileHeader userData={userData} isOwnProfile={isOwnProfile} onSave={handleSave} />
-			<AboutSection userData={userData} isOwnProfile={isOwnProfile} onSave={handleSave} />
-			<ExperienceSection userData={userData} isOwnProfile={isOwnProfile} onSave={handleSave} />
-			<EducationSection userData={userData} isOwnProfile={isOwnProfile} onSave={handleSave} />
-			<SkillsSection userData={userData} isOwnProfile={isOwnProfile} onSave={handleSave} />
+		<div className='max-w-7xl mx-auto p-4 grid grid-cols-1 lg:grid-cols-3 gap-6'>
+			<div className='col-span-1 space-y-6'>
+				<AboutSection userData={userData} isOwnProfile={isOwnProfile} onSave={handleSave} userId={userData._id} />
+				<ExperienceSection userData={userData} isOwnProfile={isOwnProfile} onSave={handleSave} userId={userData._id} />
+				<EducationSection userData={userData} isOwnProfile={isOwnProfile} onSave={handleSave} userId={userData._id} />
+				<SkillsSection userData={userData} isOwnProfile={isOwnProfile} onSave={handleSave} userId={userData._id} />
+			</div>
+			<div className='col-span-1 lg:col-span-2'>
+				<ProfileHeader userData={userData} isOwnProfile={isOwnProfile} onSave={handleSave} userId={userData._id} />
+				<UserPostsSection userId={userData._id} />	
+			</div>
 		</div>
 	);
 };

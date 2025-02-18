@@ -17,6 +17,21 @@ export const getFeedPosts = async (req, res) => {
 	}
 };
 
+export const getUserPosts = async (req, res) => {
+	try {
+		const userId = req.params.userId;
+		const posts = await Post.find({ author: userId })
+			.populate("author", "name username profilePicture headline")
+			.populate("comments.user", "name profilePicture")
+			.sort({ createdAt: -1 });
+
+		res.status(200).json(posts);
+	} catch (error) {
+		console.error("Error in getUserPosts controller:", error);
+		res.status(500).json({ message: "Server error" });
+	}
+}
+
 export const createPost = async (req, res) => {
 	try {
 		const { content, image } = req.body;
