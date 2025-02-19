@@ -23,7 +23,7 @@ const NoticeCard = () => {
   }
 
   return (
-    <div className="notice-cards">
+    <div className="notice-card">
       {notices.map((notice, index) => (
         <div className="card mt-6" key={index}>
           <div className="image">

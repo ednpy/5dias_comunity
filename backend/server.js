@@ -10,6 +10,8 @@ import postRoutes from "./routes/post.route.js";
 import notificationRoutes from "./routes/notification.route.js";
 import connectionRoutes from "./routes/connection.route.js";
 import settings from "./routes/settings.route.js";
+import searchRoutes from "./routes/search.route.js";
+
 
 import { connectDB } from "./lib/db.js";
 
@@ -43,6 +45,8 @@ app.use("/api/v1/posts", postRoutes);
 app.use("/api/v1/notifications", notificationRoutes);
 app.use("/api/v1/connections", connectionRoutes);
 app.use("/api/v1/settings", settings);
+app.use("/api/v1/search", searchRoutes);
+
 if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "/frontend/dist")));
 

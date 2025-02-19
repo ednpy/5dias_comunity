@@ -1,0 +1,131 @@
+.user-card-two__card {
+    width: 200px;
+    height: 200px;
+    background: white;
+    border-radius: 24px;
+    padding: 2px;
+    position: relative;
+    box-shadow: #604b4a30 0px 50px 20px -30px;
+    transition: all 0.5s ease-in-out;
+}
+
+.user-card-two__profile-pic {
+    position: absolute;
+    width: calc(100% - 4px);
+    height: calc(100% - 4px);
+    top: 2px;
+    left: 2px;
+    border-radius: 24px;
+    z-index: 1;
+    border: 0px solid #ff7864;
+    overflow: hidden;
+    transition: all 0.5s ease-in-out 0.2s, z-index 0.5s ease-in-out 0.2s;
+}
+
+.user-card-two__profile-pic img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-position: 0px 0px;
+    transition: all 0.5s ease-in-out 0s;
+}
+
+.user-card-two__bottom {
+    position: absolute;
+    bottom: 2px;
+    left: 2px;
+    right: 2px;
+    background: #ff7864;
+    top: 70%;
+    border-radius: 24px;
+    z-index: 2;
+    box-shadow: rgba(96, 75, 74, 0.1882352941) 0px 5px 5px 0px inset;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1) 0s;
+}
+
+.user-card-two__bottom .user-card-two__content {
+    position: absolute;
+    bottom: 0;
+    left: 1rem;
+    right: 1rem;
+    height: 120px;
+}
+
+.user-card-two__name {
+    color: white;
+    font-weight: bold;
+}
+
+.user-card-two__bottom .user-card-two__content .user-card-two__name {
+    display: block;
+    font-size: 1rem;
+    color: white;
+    font-weight: bold;
+}
+
+.user-card-two__bottom .user-card-two__content .user-card-two__about-me {
+    display: block;
+    font-size: 0.7rem;
+    color: white;
+    margin-top: 0.5rem;
+}
+
+.user-card-two__bottom .user-card-two__bottom-bottom {
+    position: absolute;
+    bottom: 0.5rem;
+    left: 1rem;
+    right: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.user-card-two__bottom .user-card-two__bottom-bottom .user-card-two__button {
+    background: white;
+    color: #ff7864;
+    border: none;
+    border-radius: 16px;
+    font-size: 0.5rem;
+    padding: 0.3rem 0.5rem;
+    box-shadow: rgba(165, 132, 130, 0.1333333333) 0px 5px 5px 0px;
+}
+
+.user-card-two__bottom .user-card-two__bottom-bottom .user-card-two__button:hover {
+    background: #7e559b;
+    color: white;
+}
+
+.user-card-two__card:hover {
+    border-top-left-radius: 40px;
+}
+
+.user-card-two__card:hover .user-card-two__bottom {
+    top: 30%;
+    border-radius: 60px 24px 24px 24px;
+    transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1) 0.2s;
+}
+
+.user-card-two__card:hover .user-card-two__profile-pic {
+    width: 80px;
+    height: 80px;
+    aspect-ratio: 1;
+    top: 5px;
+    left: 5px;
+    border-radius: 50%;
+    z-index: 3;
+    border: 5px solid #ff7864;
+    box-shadow: rgba(96, 75, 74, 0.1882352941) 0px 5px 5px 0px;
+    transition: all 0.5s ease-in-out, z-index 0.5s ease-in-out 0.1s;
+}
+
+.user-card-two__card:hover .user-card-two__profile-pic:hover {
+    transform: scale(1.3);
+    border-radius: 0px;
+}
+
+.user-card-two__card:hover .user-card-two__profile-pic img {
+    transform: scale(2.5);
+    object-position: 0px 25px;
+    transition: all 0.5s ease-in-out 0.5s;
+}
