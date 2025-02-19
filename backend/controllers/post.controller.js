@@ -6,7 +6,7 @@ import { sendCommentNotificationEmail } from "../emails/emailHandlers.js";
 export const getFeedPosts = async (req, res) => {
 	try {
 		const posts = await Post.find({ author: { $in: [...req.user.connections, req.user._id] } })
-			.populate("author", "name username profilePicture headline")
+			.populate("author", "name username profilePicture headline rank")
 			.populate("comments.user", "name profilePicture")
 			.sort({ createdAt: -1 });
 
@@ -21,7 +21,7 @@ export const getUserPosts = async (req, res) => {
 	try {
 		const userId = req.params.userId;
 		const posts = await Post.find({ author: userId })
-			.populate("author", "name username profilePicture headline")
+			.populate("author", "name username profilePicture headline rank")
 			.populate("comments.user", "name profilePicture")
 			.sort({ createdAt: -1 });
 

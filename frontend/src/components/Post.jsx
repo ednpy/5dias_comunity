@@ -8,6 +8,7 @@ import { formatDistanceToNow } from "date-fns";
 
 import PostAction from "./PostAction";
 import ShareModal from "./ShareModal";
+import ProfileImage from "./elements/ProfileImage";
 
 const formatText = (text) => {
     return text
@@ -110,17 +111,20 @@ const Post = ({ post }) => {
         setShowShareModal(true);
     };
     
+    
     return (
         <div className='bg-white rounded-lg shadow mb-4'>
             <div className='p-4'>
                 <div className='flex items-center justify-between mb-4'>
                     <div className='flex items-center'>
                         <Link to={`/profile/${post?.author?.username}`}>
-                            <img
-                                src={post.author.profilePicture || "/avatar.png"}
-                                alt={post.author.name}
-                                className='size-10 rounded-full mr-3'
-                            />
+                        <ProfileImage
+                            profilePicture={post.author.profilePicture}
+                            rank={post.author.rank}
+                            username={post.author.username}
+                            scale={10}
+                            scale_rank={4}
+                        />
                         </Link>
 
                         <div>

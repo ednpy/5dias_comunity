@@ -12,7 +12,7 @@ export const getSuggestedConnections = async (req, res) => {
 				$nin: currentUser.connections,
 			},
 		})
-			.select("name username profilePicture headline")
+			.select("name username profilePicture headline rank")
 			.limit(3);
 
 		res.json(suggestedUser);
@@ -50,6 +50,7 @@ export const updateProfile = async (req, res) => {
 			"skills",
 			"experience",
 			"education",
+			"rank",
 		];
 
 		const updatedData = {};

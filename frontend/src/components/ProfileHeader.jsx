@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import { axiosInstance } from "../lib/axios";
 import { toast } from "react-hot-toast";
+import ProfileImage from './elements/ProfileImage';
 
 import { Camera, Clock, MapPin, UserCheck, UserPlus, X } from "lucide-react";
 
@@ -171,12 +172,14 @@ const ProfileHeader = ({ userData, onSave, isOwnProfile }) => {
 			</div>
 
 			<div className='p-4'>
-				<div className='relative -mt-20 mb-4'>
-					<img
-						className='w-32 h-32 rounded-full mx-auto object-cover'
-						src={editedData.profilePicture || userData.profilePicture || "/avatar.png"}
-						alt={userData.name}
-					/>
+				<div className='relative -mt-20 mb-4 flex justify-center'>
+                    <ProfileImage
+                        profilePicture={editedData.profilePicture || userData.profilePicture}
+                        rank={userData.rank}
+						username={userData.username}
+						scale={32}
+						scale_rank={8}
+                    />
 
 					{isEditing && (
 						<label className='absolute bottom-0 right-1/2 transform translate-x-16 bg-white p-2 rounded-full shadow cursor-pointer'>

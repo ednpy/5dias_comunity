@@ -38,7 +38,7 @@ const Navbar = () => {
 						<Link to='/'>
 							<img className='h-8 rounded' src='/small-logo.png' alt='LinkedIn' />
 						</Link>
-						<SearchBar /> 
+						{authUser && <SearchBar />}
 					</div>
 					
 					<div className='flex items-center gap-2 md:gap-6'>

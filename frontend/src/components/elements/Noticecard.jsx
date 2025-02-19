@@ -8,7 +8,7 @@ const NoticeCard = () => {
     queryKey: ["notices"],
     queryFn: async () => {
       const res = await axiosInstance.get('/settings/5delDia', {
-        withCredentials: true // Asegúrate de que las credenciales se envían con la solicitud
+        withCredentials: true
       });
       return res.data;
     },

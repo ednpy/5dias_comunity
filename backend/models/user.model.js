@@ -17,6 +17,10 @@ const userSchema = new mongoose.Schema(
 			type: String,
 			default: "",
 		},
+		rank: {
+			type: String,
+			default: "basico",
+		},
 		headline: {
 			type: String,
 			default: "Usuario de la comunidad",

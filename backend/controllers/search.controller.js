@@ -13,11 +13,11 @@ export const search = async (req, res) => {
                 { name: { $regex: query, $options: "i" } },
                 { username: { $regex: query, $options: "i" } },
             ],
-        }).select("name username profilePicture headline");
+        }).select("name username profilePicture headline rank");
 
         const posts = await Post.find({
             content: { $regex: query, $options: "i" },
-        }).populate("author", "name username profilePicture headline");
+        }).populate("author", "name username profilePicture headline rank");
 
         res.json({ users, posts });
     } catch (error) {
