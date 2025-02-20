@@ -8,10 +8,12 @@ import {
 	getPostById,
 	createComment,
 	likePost,
+	deleteComment,
 } from "../controllers/post.controller.js";
 
 const router = express.Router();
 
+router.delete("/:postId/comment/:commentId", protectRoute, deleteComment);
 router.get("/", protectRoute, getFeedPosts);
 router.post("/create", protectRoute, createPost);
 router.delete("/delete/:id", protectRoute, deletePost);

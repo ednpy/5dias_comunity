@@ -1,6 +1,7 @@
 import cloudinary from "../lib/cloudinary.js";
 import Post from "../models/post.model.js";
 import Notification from "../models/notification.model.js";
+import User from "../models/user.model.js";
 import { sendCommentNotificationEmail } from "../emails/emailHandlers.js";
 
 export const getFeedPosts = async (req, res) => {
@@ -53,6 +54,11 @@ export const createPost = async (req, res) => {
 
 		await newPost.save();
 
+		// Incrementa el rank del usuario
+		const user = await User.findById(req.user._id);
+		user.rank += 1000;
+		await user.save();
+
 		res.status(201).json(newPost);
 	} catch (error) {
 		console.error("Error in createPost controller:", error);
@@ -82,6 +88,11 @@ export const deletePost = async (req, res) => {
 		}
 
 		await Post.findByIdAndDelete(postId);
+
+		// Descontar 1000 del rank del usuario
+		const user = await User.findById(req.user._id);
+		user.rank -= 1000;
+		await user.save();
 
 		res.status(200).json({ message: "Post deleted successfully" });
 	} catch (error) {
@@ -116,6 +127,16 @@ export const createComment = async (req, res) => {
 			},
 			{ new: true }
 		).populate("author", "name email username headline profilePicture");
+		
+		// Incrementar el rank del autor del post
+		const postAuthor = await User.findById(post.author._id);
+		postAuthor.rank += 400;
+		await postAuthor.save();
+
+		// Incrementar el rank del usuario que crea el comentario
+		const user = await User.findById(req.user._id);
+		user.rank += 200;
+		await user.save();
 
 		// create a notification if the comment owner is not the post owner
 		if (post.author._id.toString() !== req.user._id.toString()) {
@@ -149,6 +170,49 @@ export const createComment = async (req, res) => {
 	}
 };
 
+export const deleteComment = async (req, res) => {
+    try {
+        const postId = req.params.postId;
+        const commentId = req.params.commentId;
+        const userId = req.user._id;
+
+        const post = await Post.findById(postId);
+
+        if (!post) {
+            return res.status(404).json({ message: "Post not found" });
+        }
+
+        const comment = post.comments.id(commentId);
+
+        if (!comment) {
+            return res.status(404).json({ message: "Comment not found" });
+        }
+
+        // Check if the current user is the author of the comment
+        if (comment.user.toString() !== userId.toString()) {
+            return res.status(403).json({ message: "You are not authorized to delete this comment" });
+        }
+
+        // Remove the comment
+        post.comments.pull(commentId);
+        await post.save();
+
+        // Decrementar el rank del usuario que creó el comentario
+        const user = await User.findById(userId);
+        user.rank -= 200;
+        await user.save();
+
+        // Decrementar el rank del autor del post
+        const postAuthor = await User.findById(post.author);
+        postAuthor.rank -= 400;
+        await postAuthor.save();
+
+        res.status(200).json({ message: "Comment deleted successfully" });
+    } catch (error) {
+        console.error("Error in deleteComment controller:", error);
+        res.status(500).json({ message: "Server error" });
+    }
+};
 export const likePost = async (req, res) => {
 	try {
 		const postId = req.params.id;
@@ -158,9 +222,31 @@ export const likePost = async (req, res) => {
 		if (post.likes.includes(userId)) {
 			// unlike the post
 			post.likes = post.likes.filter((id) => id.toString() !== userId.toString());
+
+			 // restar 200 puntos al usuario que dio el like
+			 const user = await User.findById(userId);
+			 user.rank -= 200;
+			 await user.save();
+ 
+			 // restar 400 puntos al autor del post
+			 const postAuthor = await User.findById(post.author);
+			 postAuthor.rank -= 400;
+			 await postAuthor.save();
+
 		} else {
 			// like the post
 			post.likes.push(userId);
+
+			 // sumar 200 puntos al usuario que dio el like
+			 const user = await User.findById(userId);
+			 user.rank += 200;
+			 await user.save();
+ 
+			 // sumar 400 puntos al autor del post
+			 const postAuthor = await User.findById(post.author);
+			 postAuthor.rank += 400;
+			 await postAuthor.save();
+
 			// create a notification if the post owner is not the user who liked
 			if (post.author.toString() !== userId.toString()) {
 				const newNotification = new Notification({

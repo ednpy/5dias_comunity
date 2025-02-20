@@ -32,6 +32,36 @@ const HomePage = () => {
         <div className='grid grid-cols-1 lg:grid-cols-4 gap-6'>
             <div className='hidden lg:block lg:col-span-1'>
                 <Sidebar user={authUser} />
+                <div className='bg-white rounded-lg shadow p-4 mt-3'>
+                <h1 className='text-center'>Sobre los Rangos</h1>
+                <p className='text-sm text-gray-600 mt-2'>
+                    Los rangos son una forma de reconocer a los usuarios más activos y participativos de la comunidad.</p>
+               
+                    <div className='grid grid-cols-2 gap-2 mt-2'>
+                        <div className='flex justify-center'><img src='/img_rank/rank_6.png' alt='Black' width="25" height="25" /></div>
+                        <div className='text-left'>Black</div>
+                        <div className='flex justify-center'><img src='/img_rank/rank_5.png' alt='Platino' width="25" height="25" /></div>
+                        <div className='text-left'>Platino</div>
+                        <div className='flex justify-center'><img src='/img_rank/rank_4.png' alt='Oro' width="25" height="25" /></div>
+                        <div className='text-left'>Oro</div>
+                        <div className='flex justify-center'><img src='/img_rank/rank_3.png' alt='Plata' width="25" height="25" /></div>
+                        <div className='text-left'>Plata</div>
+                        <div className='flex justify-center'><img src='/img_rank/rank_2.png' alt='Bronce' width="25" height="25" /></div>
+                        <div className='text-left'>Bronce</div>
+                        <div className='flex justify-center'><img src='/img_rank/rank_1.png' alt='basico' width="25" height="25" /></div>
+                        <div className='text-left'>Básico</div>
+                    </div>
+                    <p className='text-sm text-gray-600 mt-2'>
+                    Completa tu perfil, haz publicaciones e interactúa con otros usuarios para sumar puntos.</p>
+                </div>
+
+                <div className='bg-white rounded-lg shadow p-4 mt-3'>
+                <h1 className='text-center'>Ten Cuidado con lo que publicas</h1>
+                <p className='text-sm text-gray-600 mt-2'>
+                 Los moderadores de la comunidad revisan las publicaciones y comentarios para asegurarse de que cumplan con las normas de la comunidad.   
+                Recuerda que nadie es anónimo en la comunidad y que tus publicaciones pueden ser vistas por cualquier persona.
+                </p>
+                </div>
             </div>
 
             <div className='col-span-1 lg:col-span-2 order-first lg:order-none'>

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Home, UserPlus, Bell } from "lucide-react";
+import { Home, UserPlus, Bell, Database, Server, Cloud, HardDrive } from "lucide-react";
 import ProfileImage from './elements/ProfileImage';
 
 
@@ -53,6 +53,15 @@ export default function Sidebar({ user }) {
 								className='flex items-center py-2 px-4 rounded-md hover:bg-primary hover:text-white transition-colors'
 							>
 								<Bell className='mr-2' size={20} /> Notificaciones
+							</Link>
+						</li>
+						<li>
+							<Link
+								to='/bigdata'
+								className='flex items-center py-2 px-4 rounded-md hover:bg-primary hover:text-white transition-colors'
+							>
+								<Database className='mr-2' size={20} /> Big Data
+								
 							</Link>
 						</li>
 					</ul>

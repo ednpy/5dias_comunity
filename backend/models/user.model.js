@@ -18,8 +18,8 @@ const userSchema = new mongoose.Schema(
 			default: "",
 		},
 		rank: {
-			type: String,
-			default: "basico",
+			type: Number,
+			default: 0,
 		},
 		headline: {
 			type: String,
@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema(
 		},
 		location: {
 			type: String,
-			default: "Tierra",
+			default: "Paraguay",
 		},
 		about: {
 			type: String,
@@ -57,6 +57,16 @@ const userSchema = new mongoose.Schema(
 				ref: "User",
 			},
 		],
+		perfil_personalizado: {
+            about: { type: Boolean, default: false },
+            experience: { type: Boolean, default: false },
+            education: { type: Boolean, default: false },
+            skills: { type: Boolean, default: false },
+            photo_profile: { type: Boolean, default: false },
+            photo_cover: { type: Boolean, default: false },
+            ubicacion: { type: Boolean, default: false },
+            profesion: { type: Boolean, default: false },
+        },
 	},
 	{ timestamps: true }
 );

@@ -12,6 +12,7 @@ import NetworkPage from "./pages/NetworkPage";
 import PostPage from "./pages/PostPage";
 import ProfilePage from "./pages/ProfilePage";
 import SearchResultsPage from "./pages/SearchResultsPage"; 
+import BigDataPage from './pages/BigDataPage';
 
 function App() {
 	const { data: authUser, isLoading } = useQuery({
@@ -35,6 +36,7 @@ function App() {
 		<Layout>
 			<Routes>
 				<Route path='/' element={authUser ? <HomePage /> : <Navigate to={"/login"} />} />
+				<Route path="/bigdata" element={<BigDataPage />} />
 				<Route path='/signup' element={!authUser ? <SignUpPage /> : <Navigate to={"/"} />} />
 				<Route path='/login' element={!authUser ? <LoginPage /> : <Navigate to={"/"} />} />
 				<Route path='/notifications' element={authUser ? <NotificationsPage /> : <Navigate to={"/login"} />} />

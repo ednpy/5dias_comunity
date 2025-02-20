@@ -10,7 +10,7 @@ const AboutSection = ({ userData, isOwnProfile, onSave }) => {
 	};
 	return (
 		<div className='bg-white shadow rounded-lg p-6 mb-6'>
-			<h2 className='text-xl font-semibold mb-4'>About</h2>
+			<h2 className='text-xl font-semibold mb-4'>Sobre Mi</h2>
 			{isOwnProfile && (
 				<>
 					{isEditing ? (

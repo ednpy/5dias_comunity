@@ -48,11 +48,25 @@ const Post = ({ post }) => {
 
     const { mutate: createComment, isPending: isAddingComment } = useMutation({
         mutationFn: async (newComment) => {
-            await axiosInstance.post(`/posts/${post._id}/comment`, { content: newComment });
+            const response = await axiosInstance.post(`/posts/${post._id}/comment`, { content: newComment });
+            return response.data;
         },
-        onSuccess: () => {
+        onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: ["posts"] });
             toast.success("Comment added successfully");
+            setComments([
+                ...comments,
+                {
+                    _id: data.comments[data.comments.length - 1]._id, // Ensure the comment has an _id
+                    content: newComment,
+                    user: {
+                        _id: authUser._id,
+                        name: authUser.name,
+                        profilePicture: authUser.profilePicture,
+                    },
+                    createdAt: new Date(),
+                },
+            ]);
         },
         onError: (err) => {
             toast.error(err.response.data.message || "Failed to add comment");
@@ -88,18 +102,6 @@ const Post = ({ post }) => {
         if (newComment.trim()) {
             createComment(newComment);
             setNewComment("");
-            setComments([
-                ...comments,
-                {
-                    content: newComment,
-                    user: {
-                        _id: authUser._id,
-                        name: authUser.name,
-                        profilePicture: authUser.profilePicture,
-                    },
-                    createdAt: new Date(),
-                },
-            ]);
         }
     };
 
@@ -111,6 +113,28 @@ const Post = ({ post }) => {
         setShowShareModal(true);
     };
     
+
+    //eliminar comentario
+    const { mutate: deleteComment, isPending: isDeletingComment } = useMutation({
+        mutationFn: async (commentId) => {
+            await axiosInstance.delete(`/posts/${post._id}/comment/${commentId}`);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["posts"] });
+            toast.success("Comment deleted successfully");
+        },
+        onError: (error) => {
+            toast.error(error.message);
+        },
+    });
+
+    const handleDeleteComment = (commentId) => {
+        deleteComment(commentId, {
+            onSuccess: () => {
+                setComments((prevComments) => prevComments.filter(comment => comment._id !== commentId));
+            }
+        });
+    };
     
     return (
         <div className='bg-white rounded-lg shadow mb-4'>
@@ -172,7 +196,7 @@ const Post = ({ post }) => {
             {showComments && (
                 <div className='px-4 pb-4'>
                     <div className='mb-4 max-h-60 overflow-y-auto'>
-                        {comments.map((comment) => (
+                    {comments.map((comment) => (
                             <div key={comment._id} className='mb-2 bg-gray-100 p-2 rounded flex items-start'>
                                 <img
                                     src={comment.user.profilePicture || "/avatar.png"}
@@ -185,6 +209,14 @@ const Post = ({ post }) => {
                                         <span className='text-xs text-info'>
                                             {formatDistanceToNow(new Date(comment.createdAt))}
                                         </span>
+                                        {comment.user._id === authUser._id && (
+                                            <button
+                                                onClick={() => handleDeleteComment(comment._id)}
+                                                className='text-red-500 hover:text-red-700 ml-2'
+                                            >
+                                                {isDeletingComment ? <Loader size={18} className='animate-spin' /> : <Trash2 size={18} />}
+                                            </button>
+                                        )}
                                     </div>
                                     <p>{comment.content}</p>
                                 </div>

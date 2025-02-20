@@ -1,18 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './UserCardTwo.css';
+import { getRankImage } from './RankImages';
 
-const rankImages = {
-  platino: '/img_rank/rank_3.png',
-  diamante: '/img_rank/rank_5.png',
-  oro: '/img_rank/rank_4.png',
-  plata: '/img_rank/rank_3.png',
-  bronce: '/img_rank/rank_2.png',
-  basico: '/img_rank/rank_1.png',
-};
 
 const UserCardTwo = ({ user }) => {
-  const rankImage = user.rank ? rankImages[user.rank.toLowerCase()] : rankImages.basico;
+  const rankImage = getRankImage(user.rank);
 
   return (
     
@@ -21,7 +14,7 @@ const UserCardTwo = ({ user }) => {
         <img
           src={rankImage}
           alt='Rank'
-          className='w-8 h-8 rounded-full object-cover'
+          className='w-4 h-4 rounded-full object-cover'
         />
       </div>
       <div className="user-card-two__profile-pic">

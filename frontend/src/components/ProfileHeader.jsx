@@ -177,7 +177,7 @@ const ProfileHeader = ({ userData, onSave, isOwnProfile }) => {
                         profilePicture={editedData.profilePicture || userData.profilePicture}
                         rank={userData.rank}
 						username={userData.username}
-						scale={32}
+						scale={20}
 						scale_rank={8}
                     />
 

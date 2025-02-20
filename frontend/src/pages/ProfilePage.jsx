@@ -8,6 +8,7 @@ import ExperienceSection from "../components/ExperienceSection";
 import EducationSection from "../components/EducationSection";
 import SkillsSection from "../components/SkillsSection";
 import UserPostsSection from "../components/UserPostsSection";
+import ProfileCompletionRecommendation from "../components/elements/ProfileCompletionRecommendation";
 import toast from "react-hot-toast";
 
 const ProfilePage = () => {
@@ -49,6 +50,7 @@ const ProfilePage = () => {
 				<ExperienceSection userData={userData} isOwnProfile={isOwnProfile} onSave={handleSave} userId={userData._id} />
 				<EducationSection userData={userData} isOwnProfile={isOwnProfile} onSave={handleSave} userId={userData._id} />
 				<SkillsSection userData={userData} isOwnProfile={isOwnProfile} onSave={handleSave} userId={userData._id} />
+				<ProfileCompletionRecommendation perfilPersonalizado={userData.perfil_personalizado} />
 			</div>
 			<div className='col-span-1 lg:col-span-2'>
 				<ProfileHeader userData={userData} isOwnProfile={isOwnProfile} onSave={handleSave} userId={userData._id} />

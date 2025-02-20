@@ -48,7 +48,7 @@ const ExperienceSection = ({ userData, isOwnProfile, onSave }) => {
 
 	return (
 		<div className='bg-white shadow rounded-lg p-6 mb-6'>
-			<h2 className='text-xl font-semibold mb-4'>Experience</h2>
+			<h2 className='text-xl font-semibold mb-4'>Experiencia</h2>
 			{experiences.map((exp) => (
 				<div key={exp._id} className='mb-4 flex justify-between items-start'>
 					<div className='flex items-start'>
@@ -141,7 +141,7 @@ const ExperienceSection = ({ userData, isOwnProfile, onSave }) => {
 							onClick={() => setIsEditing(true)}
 							className='mt-4 text-primary hover:text-primary-dark transition duration-300'
 						>
-							Edit Experiences
+							Edit
 						</button>
 					)}
 				</>
