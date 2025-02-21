@@ -11,7 +11,7 @@ const BigDataPage = () => {
 
     const noticeCards = (
         <>
-            <div className="notice-card order-2 lg:order-none" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+            <div className="notice-card order-2 lg:order-none" style={{ display: 'flex', justifyContent: 'center', height: '100%' }}>
                 <div className="card mt-1" style={{ border: '5px solid white' }}>
                     <div className="image">
                         <img src='/page_1.jpg' alt='Portada del día' className='image' style={{ borderTopLeftRadius: '10px', borderTopRightRadius: '10px', display: 'block', margin: '0 auto' }}/>                    
@@ -30,7 +30,7 @@ const BigDataPage = () => {
                 </div>
             </div>
 
-            <div className="notice-card order-2 lg:order-none" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+            <div className="notice-card order-2 lg:order-none" style={{ display: 'flex', justifyContent: 'center', height: '100%' }}>
                 <div className="card mt-1" style={{ border: '5px solid white' }}>
                     <div className="image">
                         <img src='/boletin_estadistico.png' alt='Boletín Estadístico' className='image' style={{ borderTopLeftRadius: '10px', borderTopRightRadius: '10px', display: 'block', margin: '0 auto' }}/>                    
