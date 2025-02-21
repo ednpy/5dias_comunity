@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { axiosInstance } from "../lib/axios";
+import { useMediaQuery } from 'react-responsive';
 
 import ProfileHeader from "../components/ProfileHeader";
 import AboutSection from "../components/AboutSection";
@@ -14,6 +15,7 @@ import toast from "react-hot-toast";
 const ProfilePage = () => {
     const { username } = useParams();
     const queryClient = useQueryClient();
+    const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
 
     const { data: authUser, isLoading } = useQuery({
         queryKey: ["authUser"],
@@ -45,17 +47,31 @@ const ProfilePage = () => {
 
     return (
         <div className='max-w-7xl mx-auto p-4 grid grid-cols-1 lg:grid-cols-3 gap-6'>
-            <div className='col-span-1 space-y-6'>
-                <AboutSection userData={userData} isOwnProfile={isOwnProfile} onSave={handleSave} userId={userData._id} />
-                <ExperienceSection userData={userData} isOwnProfile={isOwnProfile} onSave={handleSave} userId={userData._id} />
-                <EducationSection userData={userData} isOwnProfile={isOwnProfile} onSave={handleSave} userId={userData._id} />
-                <SkillsSection userData={userData} isOwnProfile={isOwnProfile} onSave={handleSave} userId={userData._id} />
-                <ProfileCompletionRecommendation perfilPersonalizado={userData.perfil_personalizado} />
-            </div>
-            <div className='col-span-1 lg:col-span-2'>
-                <ProfileHeader userData={userData} isOwnProfile={isOwnProfile} onSave={handleSave} userId={userData._id} />
-                <UserPostsSection userId={userData._id} />	
-            </div>
+            {isMobile ? (
+                <>
+                    <ProfileHeader userData={userData} isOwnProfile={isOwnProfile} onSave={handleSave} userId={userData._id} />
+                    <AboutSection userData={userData} isOwnProfile={isOwnProfile} onSave={handleSave} userId={userData._id} />
+                    <ExperienceSection userData={userData} isOwnProfile={isOwnProfile} onSave={handleSave} userId={userData._id} />
+                    <EducationSection userData={userData} isOwnProfile={isOwnProfile} onSave={handleSave} userId={userData._id} />
+                    <SkillsSection userData={userData} isOwnProfile={isOwnProfile} onSave={handleSave} userId={userData._id} />
+                    {isOwnProfile && <ProfileCompletionRecommendation perfilPersonalizado={userData.perfil_personalizado} />}
+                    <UserPostsSection userId={userData._id} />
+                </>
+            ) : (
+                <>
+                    <div className='col-span-1 space-y-6'>
+                        <AboutSection userData={userData} isOwnProfile={isOwnProfile} onSave={handleSave} userId={userData._id} />
+                        <ExperienceSection userData={userData} isOwnProfile={isOwnProfile} onSave={handleSave} userId={userData._id} />
+                        <EducationSection userData={userData} isOwnProfile={isOwnProfile} onSave={handleSave} userId={userData._id} />
+                        <SkillsSection userData={userData} isOwnProfile={isOwnProfile} onSave={handleSave} userId={userData._id} />
+                        {isOwnProfile && <ProfileCompletionRecommendation perfilPersonalizado={userData.perfil_personalizado} />}
+                    </div>
+                    <div className='col-span-1 lg:col-span-2'>
+                        <ProfileHeader userData={userData} isOwnProfile={isOwnProfile} onSave={handleSave} userId={userData._id} />
+                        <UserPostsSection userId={userData._id} />
+                    </div>
+                </>
+            )}
         </div>
     );
 };
