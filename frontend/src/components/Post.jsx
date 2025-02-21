@@ -143,6 +143,7 @@ const Post = ({ post }) => {
                     <div className='flex items-center'>
                         <Link to={`/profile/${post?.author?.username}`}>
                         <ProfileImage
+                            userPerfilPersonalizado={post.author.perfil_personalizado}
                             profilePicture={post.author.profilePicture}
                             rank={post.author.rank}
                             username={post.author.username}

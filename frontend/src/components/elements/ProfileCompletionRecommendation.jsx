@@ -20,21 +20,25 @@ const ProfileCompletionRecommendation = ({ perfilPersonalizado }) => {
             <h2 className="text-xl font-bold mb-4 text-gray-800">Mejora tu perfil</h2>
             <p className="font-medium mb-2">Completa tus datos para mejorar tu perfil y que las personas puedan encontrarte.</p>
             {incompleteFields.length > 0 ? (
-                <ul className="list-disc pl-5 space-y-2">
-                    {fields.map((field) => (
-                        <li key={field} className="capitalize text-gray-700 flex items-center">
-                            {perfilPersonalizado[field] ? (
-                                <FaCheckCircle className="text-green-500 mr-2" />
-                            ) : (
-                                <FaTimesCircle className="text-red-500 mr-2" />
-                            )}
-                            {fieldNames[field] || field.replace('_', ' ')}
-                        </li>
-                    ))}
-                </ul>
+                <div>
+                    <ul className="list-disc pl-5 space-y-2">
+                        {fields.map((field) => (
+                            <li key={field} className="capitalize text-gray-700 flex items-center">
+                                {perfilPersonalizado[field] ? (
+                                    <FaCheckCircle className="text-green-500 mr-2" />
+                                ) : (
+                                    <FaTimesCircle className="text-red-500 mr-2" />
+                                )}
+                                {fieldNames[field] || field.replace('_', ' ')}
+                            </li>
+                        ))}
+                    </ul>
+                    <p className="text-gray-700 mb-2 mt-2">Aunque puedes sumar puntos interactuando con otros usuarios, no verás tu progreso real hasta que completes tu perfil.</p>
+                </div>
             ) : (
                 <p className="font-medium">¡Tu perfil está completo!</p>
             )}
+
         </div>
     );
 };

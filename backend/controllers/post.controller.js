@@ -4,10 +4,10 @@ import Notification from "../models/notification.model.js";
 import User from "../models/user.model.js";
 import { sendCommentNotificationEmail } from "../emails/emailHandlers.js";
 
-export const getFeedPosts = async (req, res) => {
+/*export const getFeedPosts = async (req, res) => {
 	try {
 		const posts = await Post.find({ author: { $in: [...req.user.connections, req.user._id] } })
-			.populate("author", "name username profilePicture headline rank")
+			.populate("author", "name username profilePicture headline rank perfil_personalizado")
 			.populate("comments.user", "name profilePicture")
 			.sort({ createdAt: -1 });
 
@@ -16,13 +16,55 @@ export const getFeedPosts = async (req, res) => {
 		console.error("Error in getFeedPosts controller:", error);
 		res.status(500).json({ message: "Server error" });
 	}
+};*/
+
+export const getFeedPosts = async (req, res) => {
+    try {
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 20;
+        const skip = (page - 1) * limit;
+
+        const posts = await Post.find({ author: { $in: [...req.user.connections, req.user._id] } })
+            .populate("author", "name username profilePicture headline rank perfil_personalizado")
+            .populate("comments.user", "name profilePicture")
+            .sort({ createdAt: -1 })
+            .skip(skip)
+            .limit(limit);
+
+        res.status(200).json(posts);
+    } catch (error) {
+        console.error("Error in getFeedPosts controller:", error);
+        res.status(500).json({ message: "Server error" });
+    }
 };
 
+
 export const getUserPosts = async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 20;
+        const skip = (page - 1) * limit;
+
+        const posts = await Post.find({ author: userId })
+            .populate("author", "name username profilePicture headline rank perfil_personalizado")
+            .populate("comments.user", "name profilePicture")
+            .sort({ createdAt: -1 })
+            .skip(skip)
+            .limit(limit);
+
+        res.status(200).json(posts);
+    } catch (error) {
+        console.error("Error in getUserPosts controller:", error);
+        res.status(500).json({ message: "Server error" });
+    }
+};
+
+/*export const getUserPosts = async (req, res) => {
 	try {
 		const userId = req.params.userId;
 		const posts = await Post.find({ author: userId })
-			.populate("author", "name username profilePicture headline rank")
+			.populate("author", "name username profilePicture headline rank perfil_personalizado")
 			.populate("comments.user", "name profilePicture")
 			.sort({ createdAt: -1 });
 
@@ -31,7 +73,8 @@ export const getUserPosts = async (req, res) => {
 		console.error("Error in getUserPosts controller:", error);
 		res.status(500).json({ message: "Server error" });
 	}
-}
+}*/
+
 
 export const createPost = async (req, res) => {
 	try {

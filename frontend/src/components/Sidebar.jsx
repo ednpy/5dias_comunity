@@ -16,6 +16,7 @@ export default function Sidebar({ user }) {
 				 <Link to={`/profile/${user.username}`}>
                     <div className='w-20 h-20 rounded-full mx-auto mt-[-40px]'>
                         <ProfileImage
+							userPerfilPersonalizado={user.perfil_personalizado}
                             profilePicture={user.profilePicture}
                             rank={user.rank}
                             username={user.username}

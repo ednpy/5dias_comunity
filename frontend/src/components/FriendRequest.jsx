@@ -35,6 +35,7 @@ const FriendRequest = ({ request }) => {
 				<Link to={`/profile/${request.sender.username}`}>
 					
 					<ProfileImage 
+					userPerfilPersonalizado={request.sender.perfil_personalizado}
 					profilePicture={request.sender.profilePicture} 
 					username={request.sender.username} 
 					scale={16} 

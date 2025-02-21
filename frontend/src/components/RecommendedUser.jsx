@@ -117,6 +117,7 @@ const RecommendedUser = ({ user }) => {
 			<Link to={`/profile/${user.username}`} className='flex items-center flex-grow'>
 				
 				<ProfileImage
+					userPerfilPersonalizado={user.perfil_personalizado}
 					profilePicture={user.profilePicture}
 					rank={user.rank}
 					username={user.username}

@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@tanstack/react-query": "^5.55.0",
+    "@tanstack/react-query": "^5.66.8",
     "axios": "^1.7.7",
     "date-fns": "^3.6.0",
     "linkedin-clone": "file:..",
@@ -20,6 +20,7 @@
     "react-dom": "^18.3.1",
     "react-hot-toast": "^2.4.1",
     "react-icons": "^5.5.0",
+    "react-intersection-observer": "^9.15.1",
     "react-router-dom": "^6.26.1"
   },
   "devDependencies": {

@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
 import { axiosInstance } from "../lib/axios";
 import Sidebar from "../components/Sidebar";
 import PostCreation from "../components/PostCreation";
@@ -6,6 +6,9 @@ import Post from "../components/Post";
 import { Users } from "lucide-react";
 import RecommendedUser from "../components/RecommendedUser";
 import NoticeCard from "../components/elements/Noticecard";
+import { useInView } from "react-intersection-observer";
+import Loader from "../components/loaders/Loader";
+
 
 const HomePage = () => {
 	const { data: authUser } = useQuery({ queryKey: ["authUser"] });
@@ -18,13 +21,37 @@ const HomePage = () => {
 		},
 	});
 
-	const { data: posts } = useQuery({
+	/*const { data: posts } = useQuery({
 		queryKey: ["posts"],
 		queryFn: async () => {
 			const res = await axiosInstance.get("/posts");
 			return res.data;
 		},
-	});
+	});*/
+    const {
+        data: posts,
+        fetchNextPage,
+        hasNextPage,
+        isFetchingNextPage,
+    } = useInfiniteQuery({
+        queryKey: ["posts"],
+        queryFn: async ({ pageParam = 1 }) => {
+            const res = await axiosInstance.get(`/posts?page=${pageParam}&limit=20`);
+            return res.data;
+        },
+        getNextPageParam: (lastPage, allPages) => {
+            return lastPage.length === 20 ? allPages.length + 1 : undefined;
+        },
+    });
+
+    const { ref, inView } = useInView({
+        threshold: 1.0,
+        onChange: (inView) => {
+            if (inView && hasNextPage) {
+                fetchNextPage();
+            }
+        },
+    });
 
 	console.log("posts", posts);
 
@@ -66,12 +93,25 @@ const HomePage = () => {
 
             <div className='col-span-1 lg:col-span-2 order-first lg:order-none'>
                 <PostCreation user={authUser} />
-
+                {/*              
                 {posts?.map((post) => (
                 <Post key={post._id} post={post} />
                 ))}
+                */}
+                 {posts?.pages.map((page) =>
+                    page.map((post) => (
+                        <Post key={post._id} post={post} />
+                    ))
+                )}
 
-                {posts?.length === 0 && (
+                <div className='flex justify-center'>
+                    {isFetchingNextPage && <Loader />}
+                </div>
+                
+                <div ref={ref}></div>
+
+
+                {posts?.pages[0]?.length === 0 && (
                 <div className='bg-white rounded-lg shadow p-8 text-center'>
                     <div className='mb-6'>
                     <Users size={64} className='mx-auto text-blue-500' />

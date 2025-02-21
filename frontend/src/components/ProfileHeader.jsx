@@ -174,6 +174,7 @@ const ProfileHeader = ({ userData, onSave, isOwnProfile }) => {
 			<div className='p-4'>
 				<div className='relative -mt-20 mb-4 flex justify-center'>
                     <ProfileImage
+						userPerfilPersonalizado={userData.perfil_personalizado}
                         profilePicture={editedData.profilePicture || userData.profilePicture}
                         rank={userData.rank}
 						username={userData.username}

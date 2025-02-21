@@ -45,8 +45,8 @@ export const acceptConnectionRequest = async (req, res) => {
 		const userId = req.user._id;
 
 		const request = await ConnectionRequest.findById(requestId)
-			.populate("sender", "name email username rank")
-			.populate("recipient", "name username rank");
+			.populate("sender", "name email username rank perfil_personalizado")
+			.populate("recipient", "name username rank perfil_personalizado");
 
 		if (!request) {
 			return res.status(404).json({ message: "Connection request not found" });
@@ -125,7 +125,7 @@ export const getConnectionRequests = async (req, res) => {
 
 		const requests = await ConnectionRequest.find({ recipient: userId, status: "pending" }).populate(
 			"sender",
-			"name username profilePicture headline connections rank"
+			"name username profilePicture headline connections rank perfil_personalizado"
 		);
 
 		res.json(requests);
@@ -141,7 +141,7 @@ export const getUserConnections = async (req, res) => {
 
 		const user = await User.findById(userId).populate(
 			"connections",
-			"name username profilePicture headline connections rank"
+			"name username profilePicture headline connections rank perfil_personalizado"
 		);
 
 		res.json(user.connections);

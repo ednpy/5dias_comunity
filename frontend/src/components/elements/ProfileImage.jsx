@@ -1,9 +1,8 @@
 import React from 'react';
 import { getRankImage } from './RankImages';
 
-const ProfileImage = ({ profilePicture, rank, username, scale, scale_rank }) => {
-  const rankImage = getRankImage(rank);
-
+const ProfileImage = ({ profilePicture, rank, username, scale, scale_rank, userPerfilPersonalizado }) => {
+  const rankImage = getRankImage(rank, userPerfilPersonalizado);
   return (
     <div className={`relative w-${scale} h-${scale}`}>
       <img

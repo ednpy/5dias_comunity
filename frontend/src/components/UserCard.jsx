@@ -7,6 +7,7 @@ function UserCard({ user, isConnection }) {
 			<Link to={`/profile/${user.username}`} className='flex flex-col items-center'>
 				
 				<ProfileImage
+					userPerfilPersonalizado={user.perfil_personalizado}
 					profilePicture={user.profilePicture}
 					rank={user.rank}
 					username={user.username}
