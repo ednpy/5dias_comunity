@@ -10,7 +10,7 @@ const Navbar = () => {
 
 	const { data: notifications } = useQuery({
 		queryKey: ["notifications"],
-		queryFn: async () => axiosInstance.get("/notifications"),
+		queryFn: async () => axiosInstance.get("/notifications/all"),
 		enabled: !!authUser,
 	});
 
@@ -27,9 +27,9 @@ const Navbar = () => {
 		},
 	});
 
-	const unreadNotificationCount = notifications?.data.filter((notif) => !notif.read).length;
+    const unreadNotificationCount = Array.isArray(notifications?.data) ? notifications.data.filter((notif) => !notif.read).length : 0;
 	const unreadConnectionRequestsCount = connectionRequests?.data?.length;
-
+	
 	return (
 		<nav className='bg-white shadow-md sticky top-0 z-10'>
 			<div className='max-w-7xl mx-auto px-4'>

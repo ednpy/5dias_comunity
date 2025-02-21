@@ -1,6 +1,6 @@
 import Notification from "../models/notification.model.js";
 
-export const getUserNotifications = async (req, res) => {
+export const getAllNotifications = async (req, res) => {
 	try {
 		const notifications = await Notification.find({ recipient: req.user._id })
 			.sort({ createdAt: -1 })
@@ -12,6 +12,30 @@ export const getUserNotifications = async (req, res) => {
 		console.error("Error in getUserNotifications controller:", error);
 		res.status(500).json({ message: "Internal server error" });
 	}
+};
+
+
+export const getUserNotifications = async (req, res) => {
+    try {
+        const { page = 1, limit = 5 } = req.query;
+        const notifications = await Notification.find({ recipient: req.user._id })
+            .sort({ read: 1, createdAt: -1 }) // Ordenar por 'read' y luego por 'createdAt'
+            .populate("relatedUser", "name username profilePicture")
+            .populate("relatedPost", "content image")
+            .skip((page - 1) * limit)
+            .limit(parseInt(limit));
+
+        const totalNotifications = await Notification.countDocuments({ recipient: req.user._id });
+
+        res.status(200).json({
+            notifications,
+            totalPages: Math.ceil(totalNotifications / limit),
+            currentPage: parseInt(page),
+        });
+    } catch (error) {
+        console.error("Error in getUserNotifications controller:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
 };
 
 export const markNotificationAsRead = async (req, res) => {
