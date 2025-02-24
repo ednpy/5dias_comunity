@@ -71,12 +71,14 @@ const ProfileHeader = ({ userData, onSave, isOwnProfile }) => {
 
 	const getConnectionStatus = useMemo(() => {
 		if (isConnected) return "connected";
-		if (!isConnected) return "not_connected";
-		return connectionStatus?.data?.status;
+		if (connectionStatus?.data?.status === "pending") return "pending";
+		if (connectionStatus?.data?.status === "received") return "received";
+		return "not_connected";
 	}, [isConnected, connectionStatus]);
 
 	const renderConnectionButton = () => {
 		const baseClass = "text-white py-2 px-4 rounded-full transition duration-300 flex items-center justify-center";
+		console.log(getConnectionStatus);
 		switch (getConnectionStatus) {
 			case "connected":
 				return (

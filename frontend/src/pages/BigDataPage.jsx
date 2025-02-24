@@ -9,9 +9,9 @@ const BigDataPage = () => {
     const { data: authUser } = useQuery({ queryKey: ["authUser"] });
     const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
 
-    const noticeCards = (
+    const NoticeCards = ({ order }) => (
         <>
-            <div className="notice-card order-2 lg:order-none" style={{ display: 'flex', justifyContent: 'center', height: '100%' }}>
+            <div className={`notice-card order-${order} lg:order-none`} style={{ display: 'flex', justifyContent: 'center', height: '100%' }}>
                 <div className="card mt-1" style={{ border: '5px solid white' }}>
                     <div className="image">
                         <img src='/page_1.jpg' alt='Portada del día' className='image' style={{ borderTopLeftRadius: '10px', borderTopRightRadius: '10px', display: 'block', margin: '0 auto' }}/>                    
@@ -30,7 +30,7 @@ const BigDataPage = () => {
                 </div>
             </div>
 
-            <div className="notice-card order-2 lg:order-none" style={{ display: 'flex', justifyContent: 'center', height: '100%' }}>
+            <div className={`notice-card order-${order} lg:order-none`} style={{ display: 'flex', justifyContent: 'center', height: '100%' }}>
                 <div className="card mt-1" style={{ border: '5px solid white' }}>
                     <div className="image">
                         <img src='/boletin_estadistico.png' alt='Boletín Estadístico' className='image' style={{ borderTopLeftRadius: '10px', borderTopRightRadius: '10px', display: 'block', margin: '0 auto' }}/>                    
@@ -51,8 +51,8 @@ const BigDataPage = () => {
         </>
     );
 
-    const powerBIEmbed = (
-        <div className='col-span-1 lg:col-span-4 order-1 lg:order-none'>
+    const PowerBIEmbedComponent = ({ order }) => (
+        <div className={`col-span-1 lg:col-span-4 order-${order} lg:order-none`}>
             <div className='bg-[#7e559b] rounded-lg p-4 flex items-center mb-4'>
                 <svg className='w-6 h-6 text-yellow-500 mr-2' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
                     <path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 100 20 10 10 0 000-20z'></path>
@@ -67,15 +67,15 @@ const BigDataPage = () => {
         <div className='grid grid-cols-1 gap-6'>
             {isMobile ? (
                 <>
-                    {noticeCards}
-                    {powerBIEmbed}
+                    <NoticeCards order={1} />
+                    <PowerBIEmbedComponent order={1} />
                 </>
             ) : (
                 <>
                     <div className='flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-4'>
-                        {noticeCards}
+                        <NoticeCards order={1} />
                     </div>
-                    {powerBIEmbed}
+                    <PowerBIEmbedComponent order={1} />
                 </>
             )}
         </div>

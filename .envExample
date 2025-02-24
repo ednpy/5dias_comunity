@@ -1,0 +1,24 @@
+PORT=5000
+MONGO_URI=mongodb+srv://mperalta:Zex8k.xmf_xXYG4@cluster0.vv96b.mongodb.net/
+#Zex8k.xmf_xXYG4
+JWT_SECRET=jwt5diassecretvictory
+
+NODE_ENV=development
+
+MAILTRAP_TOKEN=8c3cbe3dec2b204ef4d9894c0213081a
+EMAIL_FROM=mattiasperalta1995@gmail.com
+EMAIL_FROM_NAME=Editorial_de_negocios
+
+CLOUDINARY_API_KEY=266125713318766
+CLOUDINARY_API_SECRET=v7iQeMdwHniu2aHPS5YqvVdU9V4
+CLOUDINARY_CLOUD_NAME=dfsfsr1lv
+
+CLIENT_URL=http://localhost:5173
+
+MINIO_ENDPOINT=http://localhost:9000
+MINIO_ACCESS_KEY=JEYAwxJbI0RoJNlJHzqz
+MINIO_SECRET_KEY=zHSIfYWHt2YEp8TQF7r9mm2IAEi03JexTzNm0MEa
+MINIO_BUCKET_NAME=5dias-comunity
+
+GMAIL_USER=editorial@5dias.com.py
+GMAIL_PASS=jyym icuk niqc glvf

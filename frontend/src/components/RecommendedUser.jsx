@@ -112,6 +112,10 @@ const RecommendedUser = ({ user }) => {
 		}
 	};
 
+	if (connectionStatus?.data?.status === "pending" || connectionStatus?.data?.status === "connected") {
+        return null;
+    }
+
 	return (
 		<div className='flex items-center justify-between mb-4'>
 			<Link to={`/profile/${user.username}`} className='flex items-center flex-grow'>

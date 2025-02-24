@@ -251,7 +251,7 @@ const Post = ({ post }) => {
                 />
             )}
             {showConfirmModal && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
                     <div className="group select-none w-[250px] flex flex-col p-4 relative items-center justify-center bg-gray-800 border border-gray-800 shadow-lg rounded-2xl">
                         <div className="">
                             <div className="text-center p-3 flex-auto justify-center">
