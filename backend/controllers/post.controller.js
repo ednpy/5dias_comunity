@@ -1,8 +1,10 @@
-import cloudinary from "../lib/cloudinary.js";
 import Post from "../models/post.model.js";
 import Notification from "../models/notification.model.js";
 import User from "../models/user.model.js";
 import { sendCommentNotificationEmail } from "../emails/emailHandlers.js";
+import { uploadImageToMinio } from '../lib/uploadMinio.js';
+import minioClient from '../lib/minio.js';
+
 
 /*export const getFeedPosts = async (req, res) => {
 	try {
@@ -77,36 +79,40 @@ export const getUserPosts = async (req, res) => {
 
 
 export const createPost = async (req, res) => {
-	try {
-		const { content, image } = req.body;
-		let newPost;
+    try {
+        const { content, image } = req.body;
+        let newPost;
 
-		if (image) {
-			const imgResult = await cloudinary.uploader.upload(image);
-			newPost = new Post({
-				author: req.user._id,
-				content,
-				image: imgResult.secure_url,
-			});
-		} else {
-			newPost = new Post({
-				author: req.user._id,
-				content,
-			});
-		}
+        if (image) {
+           
+			const imageUrl = await uploadImageToMinio(image,'post');
 
-		await newPost.save();
+            //console.log("Image URL:", imageUrl);
 
-		// Incrementa el rank del usuario
-		const user = await User.findById(req.user._id);
-		user.rank += 1000;
-		await user.save();
+            newPost = new Post({
+                author: req.user._id,
+                content,
+                image: imageUrl,
+            });
+        } else {
+            newPost = new Post({
+                author: req.user._id,
+                content,
+            });
+        }
 
-		res.status(201).json(newPost);
-	} catch (error) {
-		console.error("Error in createPost controller:", error);
-		res.status(500).json({ message: "Server error" });
-	}
+        await newPost.save();
+
+        // Incrementa el rank del usuario
+        const user = await User.findById(req.user._id);
+        user.rank += 1000;
+        await user.save();
+
+        res.status(201).json(newPost);
+    } catch (error) {
+        console.error("Error in createPost controller:", error);
+        res.status(500).json({ message: "Server error" });
+    }
 };
 
 export const deletePost = async (req, res) => {
@@ -127,7 +133,8 @@ export const deletePost = async (req, res) => {
 
 		// delete the image from cloudinary as well!
 		if (post.image) {
-			await cloudinary.uploader.destroy(post.image.split("/").pop().split(".")[0]);
+			const objectName = post.image.split('/').slice(-2).join('/');
+            await minioClient.removeObject(process.env.MINIO_BUCKET_NAME, objectName);
 		}
 
 		await Post.findByIdAndDelete(postId);
