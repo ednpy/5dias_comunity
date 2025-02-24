@@ -29,6 +29,14 @@ const LoginPage = () => {
                                 Registrate
                             </Link>
                         </div>
+                        <div className='mt-6 flex justify-center text-sm'>
+                            <Link
+                                to='/request-password-reset'
+                                className='px-2 bg-secondary text-gray-500'
+                            >
+                                ¿Olvidaste tu contraseña?
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>

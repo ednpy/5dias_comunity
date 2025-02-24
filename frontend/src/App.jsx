@@ -13,6 +13,8 @@ import PostPage from "./pages/PostPage";
 import ProfilePage from "./pages/ProfilePage";
 import SearchResultsPage from "./pages/SearchResultsPage"; 
 import BigDataPage from './pages/BigDataPage';
+import RequestPasswordResetPage from "./pages/RequestPasswordResetPage";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
 
 function App() {
 	const { data: authUser, isLoading } = useQuery({
@@ -44,6 +46,8 @@ function App() {
 				<Route path='/post/:postId' element={authUser ? <PostPage /> : <Navigate to={"/login"} />} />
 				<Route path='/profile/:username' element={authUser ? <ProfilePage /> : <Navigate to={"/login"} />} />
 				<Route path='/search' element={authUser ? <SearchResultsPage /> : <Navigate to={"/login"} />} />
+				<Route path='/request-password-reset' element={<RequestPasswordResetPage />} />
+                <Route path='/reset-password/:token' element={<ResetPasswordPage />} />
 			</Routes>
 			<Toaster />
 		</Layout>

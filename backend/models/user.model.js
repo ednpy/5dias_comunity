@@ -67,6 +67,8 @@ const userSchema = new mongoose.Schema(
             ubicacion: { type: Boolean, default: false },
             profesion: { type: Boolean, default: false },
         },
+		resetPasswordToken: String,
+        resetPasswordExpires: Date,
 	},
 	{ timestamps: true }
 );
