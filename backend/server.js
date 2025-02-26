@@ -10,6 +10,7 @@ import postRoutes from "./routes/post.route.js";
 import notificationRoutes from "./routes/notification.route.js";
 import connectionRoutes from "./routes/connection.route.js";
 import settings from "./routes/settings.route.js";
+import issued from "./routes/issued.route.js";
 import searchRoutes from "./routes/search.route.js";
 
 
@@ -21,8 +22,12 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const __dirname = path.resolve();
 
-const allowedOrigins = ["http://localhost:5173", "http://127.0.0.1:5173"];
-
+const allowedOrigins = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "http://localhost:5000",
+    "http://127.0.0.1:5000"
+];
 const corsOptions = {
     origin: function (origin, callback) {
         if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
@@ -46,6 +51,8 @@ app.use("/api/v1/notifications", notificationRoutes);
 app.use("/api/v1/connections", connectionRoutes);
 app.use("/api/v1/settings", settings);
 app.use("/api/v1/search", searchRoutes);
+app.use("/api/v1/issued", issued);
+
 
 if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "/frontend/dist")));

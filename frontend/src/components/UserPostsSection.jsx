@@ -2,7 +2,6 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { axiosInstance } from "../lib/axios";
 import Post from "./Post";
 import Loader from "./loaders/Loader";
-import Typewriter from "./loaders/typewriter";
 import { useInView } from "react-intersection-observer";
 
 const UserPostsSection = ({ userId }) => {
@@ -40,7 +39,7 @@ const UserPostsSection = ({ userId }) => {
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', marginTop: '50px' }}>
             <div>No hay publicaciones disponibles</div>
             <div style={{ marginTop: '50px' }}>
-                <Typewriter />
+                <Loader />
             </div>
         </div>
     );

@@ -1,4 +1,21 @@
 services:
+  backend:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongo
+      - minio
+  
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+  
   minio:
     image: minio/minio
     container_name: minio
@@ -14,3 +31,6 @@ services:
 
 volumes:
   minio_data:
+  mongo-data:
+
+  

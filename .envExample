@@ -1,5 +1,5 @@
 PORT=5000
-MONGO_URI=mongodb+srv://mperalta:Zex8k.xmf_xXYG4@cluster0.vv96b.mongodb.net/
+MONGO_URI=mongodb+srv://<usermp>:Zex8k.xmf_xXYG4@cluster0.vv96b.mongodb.net/
 #Zex8k.xmf_xXYG4
 JWT_SECRET=jwt5diassecretvictory
 
